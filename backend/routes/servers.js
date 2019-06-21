@@ -18,7 +18,7 @@ let pool;
 router.get("/", async function(req, res) {
   console.log("GET request for all servers");
   const [results, metadata] = await pool.execute(
-    "SELECT * FROM servers"
+    "SELECT * FROM servers INNER JOIN hosting_providers ON servers.hostingId = hosting_providers.id;"
   );
   res.send(results);
 });
