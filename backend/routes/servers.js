@@ -23,4 +23,37 @@ router.get("/", async function(req, res) {
   res.send(results);
 });
 
+router.post("/", async function(req, res) {
+  console.log(req.body);
+  const [results, metadata] = await pool.execute(
+    `INSERT INTO servers (alias, ip_address, hostingId, server_status, time_created) VALUES (?, ?, ?, ?, ?)`,
+    [
+      req.body.alias,
+      req.body.ip_address,
+      req.body.hostingId,
+      req.body.server_status,
+      req.body.time_created
+    ]
+  );
+  console.log("added a new server named " + req.body.alias + ". don't forget to say hi!");
+  res.send({ status: "success", addedServerIp: req.body.ip_address, addedServerAlias: req.body.alias });
+});
+
+router.put("/:id", async function(req, res) {
+  console.log(req.body);
+  const [results, metadata] = await pool.execute(
+    `UPDATE servers SET server_status=? WHERE id=?`,
+    [req.body.server_status, req.body.id]
+  );
+  res.send({ status: "success", updatedId: req.params.id });
+});
+
+router.delete("/:id", async function(req, res) {
+  const [results, metadata] = await pool.execute(
+    `DELETE FROM servers WHERE id=?`,
+    [req.params.id]
+  );
+  res.send({ status: "success", deletedServerId: req.params.id });
+});
+
 module.exports = router;

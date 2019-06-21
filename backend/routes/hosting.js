@@ -23,4 +23,12 @@ router.get("/", async function(req, res) {
   res.send(results);
 });
 
+router.get("/:id", async function(req, res) {
+    const [results, metadata] = await pool.execute(
+      `SELECT * FROM hosting_providers WHERE id=?`,
+      [req.params.id]
+    );
+    res.send(results);
+  });
+
 module.exports = router;
