@@ -11,4 +11,8 @@ INSERT INTO `vmware_ripoff`.`hosting_providers` (`id`, `provider_name`) VALUES (
 INSERT INTO `vmware_ripoff`.`hosting_providers` (`id`, `provider_name`) VALUES ('3', 'Azure');
 INSERT INTO `vmware_ripoff`.`hosting_providers` (`id`, `provider_name`) VALUES ('4', 'Yossi-Servers Inc');
 
+ALTER TABLE `vmware_ripoff`.`servers` 
+CHANGE COLUMN `time_created` `time_created` BIGINT(50) NULL DEFAULT NULL ;
+
+
 
